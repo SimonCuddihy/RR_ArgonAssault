@@ -8,19 +8,21 @@ using UnityStandardAssets.CrossPlatformInput;
 public class Player : MonoBehaviour
 {
     [Tooltip("In m/s")][SerializeField] private float moveSpeed = 20f;
-    
+    private float horizontalInput;
+    private float verticalInput;
+
+    [SerializeField] float verticalPositionLimit = 14f;
+    [SerializeField] float horizontalPositionLimit = 20f;
+
     // pitch control
-    [SerializeField] float yPositionPitchFactor = -3f;
+    [SerializeField] float yPositionPitchFactor = -2f;
     [SerializeField] float controlPitchFactor = -15f;
     
     // yaw control
-    [SerializeField] float xPositionYawFactor = 3f;
+    [SerializeField] float xPositionYawFactor = 2.2f;
 
     // roll control
     [SerializeField] float controlRollFactor = -3f;
-
-    private float horizontalInput;
-    private float verticalInput;
 
     // Start is called before the first frame update
     void Start()
@@ -59,8 +61,8 @@ public class Player : MonoBehaviour
         float yOffset = verticalInput * offset;
         float rawXPos = transform.localPosition.x + xOffset;
         float rawYPos = transform.localPosition.y + yOffset;
-        float restrictedXPos = Mathf.Clamp(rawXPos, -10f, 10f);
-        float restrictedYPos = Mathf.Clamp(rawYPos, -8f, 8f);
+        float restrictedXPos = Mathf.Clamp(rawXPos, -horizontalPositionLimit, horizontalPositionLimit);
+        float restrictedYPos = Mathf.Clamp(rawYPos, -verticalPositionLimit, verticalPositionLimit);
 
         transform.localPosition = new Vector3(restrictedXPos, restrictedYPos, transform.localPosition.z);
 
