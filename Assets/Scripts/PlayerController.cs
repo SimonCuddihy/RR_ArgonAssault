@@ -5,30 +5,28 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    [Tooltip("In m/s")][SerializeField] private float moveSpeed = 20f;
+    [Header("Player Speed")]
+    [Tooltip("In m/s")][SerializeField] private float moveSpeed = 50f;
+
+    // player movement limits on screen
+    [Header("Player Movement Bounds")]
+    [SerializeField] float verticalPositionLimit = 14f;
+    [SerializeField] float horizontalPositionLimit = 25f;
+
+    [Header("Position-Based Sensitivity")]
+    [SerializeField] float yPositionPitchFactor = -2f; // pitch control
+    [SerializeField] float xPositionYawFactor = 2.2f; // yaw control
+
+    [Header("Control-Based Sensitivity")]
+    [SerializeField] float controlPitchFactor = -15f; // pitch control
+    [SerializeField] float controlRollFactor = -4f; // roll control
+    
+
+    // member variables
     private float horizontalInput;
     private float verticalInput;
-
-    [SerializeField] float verticalPositionLimit = 14f;
-    [SerializeField] float horizontalPositionLimit = 20f;
-
-    // pitch control
-    [SerializeField] float yPositionPitchFactor = -2f;
-    [SerializeField] float controlPitchFactor = -15f;
-    
-    // yaw control
-    [SerializeField] float xPositionYawFactor = 2.2f;
-
-    // roll control
-    [SerializeField] float controlRollFactor = -3f;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
