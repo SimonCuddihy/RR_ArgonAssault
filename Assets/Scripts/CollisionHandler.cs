@@ -6,6 +6,12 @@ public class CollisionHandler : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        print("Player triggered with something");
+        OnDeathSequence();
+    }
+
+    private void OnDeathSequence()
+    {
+        print("Player dying");
+        SendMessage("OnPlayerDeath");
     }
 }

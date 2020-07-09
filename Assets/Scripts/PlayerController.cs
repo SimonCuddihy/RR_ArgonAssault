@@ -27,12 +27,21 @@ public class PlayerController : MonoBehaviour
     // member variables
     private float horizontalInput;
     private float verticalInput;
+    private bool isControlEnabled = true;
 
     // Update is called once per frame
     void Update()
     {
-        ProcessTranslation();
-        ProcessRotation();
+        if (isControlEnabled)
+        {
+            ProcessTranslation();
+            ProcessRotation();
+        }
+    }
+
+    private void OnPlayerDeath() // called by string reference
+    {
+        isControlEnabled = false;
     }
 
     private void ProcessRotation()
