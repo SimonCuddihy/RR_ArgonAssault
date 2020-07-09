@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [Tooltip("In seconds")] [SerializeField] private float levelLoadDelay = 1f;
-    [Tooltip("explosion FX in player")] [SerializeField] private GameObject deathFX = null;
+    [Tooltip("In seconds")] [SerializeField] private float levelLoadDelay = 0.5f;
+    [Tooltip("explosion FX in player")] [SerializeField] private GameObject deathFX;
+    [Tooltip("where objects go to die")] [SerializeField] private Transform parent;
+
 
     // Start is called before the first frame update
     void Start()
@@ -15,7 +17,8 @@ public class Enemy : MonoBehaviour
 
     private void AddNonTriggerBoxCollider()
     {
-        Collider boxCollider = gameObject.AddComponent<BoxCollider>();
+        BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
+        boxCollider.isTrigger = false;
     }
 
     // Update is called once per frame
@@ -26,9 +29,10 @@ public class Enemy : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        print("Particles collided with" + gameObject.name);
-        deathFX.SetActive(true);
+        GameObject fx = Instantiate(deathFX, transform.position, Quaternion.identity);
+        fx.transform.parent = parent;
         Invoke("OnEnemyDestroyed",levelLoadDelay);
+        print("Particles collided with" + gameObject.name);
     }
 
     private void OnEnemyDestroyed()
