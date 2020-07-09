@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Audio
+  - Explosion
   layers:
   - Default
   - TransparentFX
