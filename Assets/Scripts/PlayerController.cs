@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
@@ -9,6 +10,9 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Player Speed")]
     [Tooltip("In m/s")][SerializeField] private float moveSpeed = 50f;
+    
+    [Header("Laser Beams")]
+    [SerializeField] private GameObject[] laserBeams;
 
     // player movement limits on screen
     [Header("Player Movement Bounds")]
@@ -29,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private float verticalInput;
     private bool isControlEnabled = true;
 
+
     // Update is called once per frame
     void Update()
     {
@@ -36,6 +41,7 @@ public class PlayerController : MonoBehaviour
         {
             ProcessTranslation();
             ProcessRotation();
+            ProcessFiring();
         }
     }
 
@@ -78,5 +84,33 @@ public class PlayerController : MonoBehaviour
         //float horizontalInput = CrossPlatformInputManager.GetAxis("Horizontal");
         //float verticalInput = CrossPlatformInputManager.GetAxis("Vertical");
         //transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * offset);
+    }
+
+    private void ProcessFiring()
+    {
+        if (CrossPlatformInputManager.GetButton("Fire"))
+        {
+            ActivateLaserBeams();
+        }
+        else
+        {
+            DeavtivateLAserBeams();
+        }
+    }
+
+    private void ActivateLaserBeams()
+    {
+        foreach (var gameObject in laserBeams)
+        {
+            gameObject.SetActive(true);
+        }
+    }
+
+    private void DeavtivateLAserBeams()
+    {
+        foreach (var gameObject in laserBeams)
+        {
+         gameObject.SetActive(false);   
+        }
     }
 }
